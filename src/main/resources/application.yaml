@@ -33,18 +33,27 @@ spring:
               - Path=/jokes, /jokes/**
             filters:
               - RewritePath=/jokes/(?<segment>.*), /jokes/${segment}
+
           - id: pedidos
             uri: http://192.168.1.77:9000
             predicates:
               - Path=/pedido/**, /cupon/**
             filters:
               - RewritePath=/(?<first>pedido|cupon)/(?<segment>.*), /${first}/${segment}
+
           - id: productos_categorias
             uri: http://192.168.1.77:3000
             predicates:
               - Path=/productos/**
             filters:
               - RewritePath=/productos/(?<segment>.*), /api/${segment}
+
+          - id: pedidos_docs
+            uri: http://192.168.1.77:9000
+            predicates:
+              - Path=/pedidos/docs
+            filters:
+              - RewritePath=/pedidos/docs, /docs
 server:
   port: 8200
 
