@@ -22,13 +22,33 @@ spring:
   sql:
     init:
       mode: always
+  # Spring Cloud Gateway Configuration
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: jokes
+            uri: https://api.chucknorris.io/jokes/random
+            predicates:
+              - Path=/jokes, /jokes/**
+            filters:
+              - RewritePath=/jokes/(?<segment>.*), /jokes/${segment}
+          - id: pedidos
+            uri: http://192.168.1.77:9000
+            predicates:
+              - Path=/pedido/**
+            filters:
+              - RewritePath=/pedido/(?<segment>.*), /pedido/${segment}
 server:
   port: 8200
+
 jwt:
   secret: OWlRMWhGajJ0cXUvMUJ4WGtnbDlackUyT1p5UmxRSXZSTXFHdHFOdURsdz0=
+
 logging:
   pattern:
     dateformat: HH:mm
+
 springdoc:
   swagger-ui:
     path: /docs

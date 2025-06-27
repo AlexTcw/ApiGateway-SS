@@ -18,7 +18,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -50,8 +53,20 @@ public class UserServiceImp implements UserService {
         String jwtToken = authenticate(consume.username(), consume.password())
                 .orElseThrow(() -> new RuntimeException("Authentication failed"));
 
+
+        Set<String> roles = new HashSet<>();
+        Set<String> permissions = new HashSet<>();
+
+        List<Object []> rolPermissionUser = userRepository.findAllUserRolesAndPermissionsByUserId(user.getUserId());
+        rolPermissionUser.forEach(rp -> {
+            roles.add(rp[0].toString());
+            permissions.add(rp[1].toString());
+        });
+
         return new ResponseJsonLogin(
                 user.getUserId(),
+                permissions,
+                roles,
                 user.getUsername(),
                 jwtToken
         );

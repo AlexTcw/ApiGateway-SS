@@ -1,4 +1,6 @@
 package com.api.gateway.model.dto.response;
 
-public record ResponseJsonLogin(long userId, String username, String jwtToken) {
+import java.util.Set;
+
+public record ResponseJsonLogin(long userId, Set<String> permissions, Set<String> roles, String username, String jwtToken) {
 }
