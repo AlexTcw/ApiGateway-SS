@@ -39,6 +39,12 @@ spring:
               - Path=/pedido/**, /cupon/**
             filters:
               - RewritePath=/(?<first>pedido|cupon)/(?<segment>.*), /${first}/${segment}
+          - id: productos_categorias
+            uri: http://192.168.1.77:3000
+            predicates:
+              - Path=/productos/**
+            filters:
+              - RewritePath=/productos/(?<segment>.*), /api/${segment}
 server:
   port: 8200
 
