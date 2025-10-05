@@ -17,7 +17,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "role")
+@Table(name = "role",schema = "usuarios")
 public class Role implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -32,7 +32,8 @@ public class Role implements Serializable {
     @JoinTable(
             name = "rol_permission",
             joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id")
+            inverseJoinColumns = @JoinColumn(name = "permission_id"),
+            schema = "usuarios"
     )
     private Set<Permission> permissions = new HashSet<>();
 }

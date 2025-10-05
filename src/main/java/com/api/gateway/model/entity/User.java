@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
+@Table(schema = "usuarios", name = "usuario")
 public class User implements Serializable, UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -44,7 +44,7 @@ public class User implements Serializable, UserDetails {
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
-                inverseJoinColumns = @JoinColumn(name = "role_id"))
+                inverseJoinColumns = @JoinColumn(name = "role_id"), schema = "usuarios")
     private Set<Role> roles;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

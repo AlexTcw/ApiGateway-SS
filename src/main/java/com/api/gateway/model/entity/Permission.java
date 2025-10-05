@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "permission")
+@Table(name = "permission",schema = "usuarios")
 public class Permission implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

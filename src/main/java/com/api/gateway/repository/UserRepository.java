@@ -14,11 +14,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = """
                     select r.name,p.name
-                    from users.user u
-                    inner join users.user_role ur on u.user_id = ur.user_id
-                    inner join users.role r on ur.role_id = r.role_id
-                    inner join users.rol_permission rp on r.role_id = rp.role_id
-                    inner join users.permission p on rp.permission_id = p.permission_id
+                    from usuarios.usuario u
+                    inner join usuarios.user_role ur on u.user_id = ur.user_id
+                    inner join usuarios.role r on ur.role_id = r.role_id
+                    inner join usuarios.rol_permission rp on r.role_id = rp.role_id
+                    inner join usuarios.permission p on rp.permission_id = p.permission_id
                     where u.user_id = :user_id
                     """,nativeQuery = true)
     List<Object[]> findAllUserRolesAndPermissionsByUserId(@Param("user_id") Long userId);

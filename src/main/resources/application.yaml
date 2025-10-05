@@ -1,11 +1,11 @@
 spring:
   application:
-    name: Tienda_back
+    name: Api-gw
   datasource:
-    url: jdbc:mysql://192.168.1.77:4000/users
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${JDBC_URL}
+    username: ${JDBC_USER}
+    password: ${JDBC_PASSWORD}
+    driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 10
       minimum-idle: 5
@@ -13,63 +13,27 @@ spring:
       connection-timeout: 30000
   jpa:
     properties:
+      hibernate.jdbc.lob.non_contextual_creation: true
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: usuarios
         format_sql: true
-        ddl-auto: create
+        ddl-auto: none
     show-sql: true
     defer-datasource-initialization: true
   sql:
     init:
       mode: always
   # Spring Cloud Gateway Configuration
-  cloud:
-    gateway:
-      mvc:
-        routes:
-          - id: jokes
-            uri: https://api.chucknorris.io/jokes/random
-            predicates:
-              - Path=/jokes, /jokes/**
-            filters:
-              - RewritePath=/jokes/(?<segment>.*), /jokes/${segment}
-
-          - id: pedidos
-            uri: http://192.168.1.77:9000
-            predicates:
-              - Path=/pedido/**, /cupon/**
-            filters:
-              - RewritePath=/(?<first>pedido|cupon)/(?<segment>.*), /${first}/${segment}
-          - id: logistica
-            uri: http://192.168.1.77:8500
-            predicates:
-              - Path=/logistica/**
-            filters:
-              - RewritePath=/logistica/(?<segment>.*), /${segment}
-          - id: productos_categorias
-            uri: http://192.168.1.77:3000
-            predicates:
-              - Path=/productos/**
-            filters:
-              - RewritePath=/productos/(?<segment>.*), /api/${segment}
-
-          - id: pedidos_docs
-            uri: http://192.168.1.77:9000
-            predicates:
-              - Path=/pedidos/docs
-            filters:
-              - RewritePath=/pedidos/docs, /docs
-
+  config:
+    import: optional:file:${GATEWAY_ROUTES}
 server:
   port: 8200
-
 jwt:
-  secret: OWlRMWhGajJ0cXUvMUJ4WGtnbDlackUyT1p5UmxRSXZSTXFHdHFOdURsdz0=
-
+  secret: ${JWT_SECRET}
 logging:
   pattern:
     dateformat: HH:mm
-
 springdoc:
   swagger-ui:
     path: /docs
