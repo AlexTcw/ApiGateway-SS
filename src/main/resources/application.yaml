@@ -31,8 +31,8 @@ server:
   port: 8200
   ssl:
     enabled: true
-    key-store: ${SSL_FILE}
-    key-store-password: ${SSL_PASS}
+    key-store: file:/home/data/certs/api-gw-keystore.p12
+    key-store-password: '{Os"HEe0Zr06'
     key-store-type: PKCS12
     key-alias: api-gw
 jwt:
