@@ -32,7 +32,7 @@ server:
   ssl:
     enabled: true
     key-store: file:/home/data/certs/api-gw-keystore.p12
-    key-store-password: '{Os"HEe0Zr06'
+    key-store-password: ${SSL_PASS}
     key-store-type: PKCS12
     key-alias: api-gw
 jwt:
