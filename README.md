@@ -1,61 +1,67 @@
-🛡️ API Gateway con Spring Cloud Gateway y Spring Security 🔒
+# 🛡️ API Gateway con Spring Cloud Gateway y Spring Security 🔒
 
-✨ Resumen del Proyecto
+---
 
-Este proyecto implementa un API Gateway robusto utilizando Spring Cloud Gateway para el enrutamiento y Spring Security para la gestión de seguridad.
+## ✨ Resumen del Proyecto
 
-📝 Descripción Detallada
+Este proyecto implementa un **API Gateway** robusto utilizando **Spring Cloud Gateway** para el enrutamiento y **Spring Security** para la gestión de seguridad.
 
-Este proyecto de arquitectura de microservicios, desarrollado con fines académicos, se enfoca en crear un punto de entrada centralizado para múltiples microservicios. Las principales funcionalidades son:
+---
 
-    Enrutamiento Centralizado: Dirige de manera eficiente las solicitudes a los servicios internos correspondientes.
+## 📝 Descripción Detallada
 
-    Filtrado de Solicitudes: Permite la aplicación de lógica pre y post-solicitud.
+Este proyecto de arquitectura de microservicios, desarrollado con fines académicos, se enfoca en crear un **punto de entrada centralizado** para múltiples microservicios. Las principales funcionalidades son:
 
-    Acceso Seguro: Protege los microservicios subyacentes mediante autenticación JWT, gestionada de forma centralizada por el Gateway.
+* **Enrutamiento Centralizado:** Dirige de manera eficiente las solicitudes a los servicios internos correspondientes.
+* **Filtrado de Solicitudes:** Permite la aplicación de lógica pre y post-solicitud.
+* **Acceso Seguro:** Protege los microservicios subyacentes mediante **autenticación JWT**, gestionada de forma centralizada por el Gateway.
 
-🚀 Instalación y Ejecución
+---
+
+## 🚀 Instalación y Ejecución
 
 Sigue estos pasos para poner en marcha el proyecto:
 
-    Clonar el Repositorio:
-    Bash
+1.  **Clonar el Repositorio:**
+    ```bash
+    git clone [https://github.com/AlexTcw/ApiGateway-SS.git](https://github.com/AlexTcw/ApiGateway-SS.git)
+    cd ApiGateway-SS
+    ```
 
-git clone https://github.com/AlexTcw/ApiGateway-SS.git
-cd ApiGateway-SS
+2.  **Compilar y Empaquetar:**
+    ```bash
+    mvn clean install
+    mvn clean package
+    ```
 
-Compilar y Empaquetar:
-Bash
-
-mvn clean install
-mvn clean package
-
-Ejecutar la Aplicación:
-Bash
-
+3.  **Ejecutar la Aplicación:**
+    ```bash
     java -jar ApiGateway-SS.jar
+    ```
 
-⚙️ Configuración del Entorno
+---
 
-🔑 Gestión de Variables de Entorno
+## ⚙️ Configuración del Entorno
 
-IMPORTANTE: Para garantizar la seguridad y la flexibilidad en diferentes entornos, todos los datos sensibles y las URLs de los microservicios se cargan dinámicamente a través de variables de entorno. Esto es una mejora clave que desacopla la configuración de la base de código.
+### 🔑 Gestión de Variables de Entorno
 
-Asegúrate de definir las siguientes variables de entorno antes de ejecutar la aplicación:
-Variable	Descripción	Ejemplo de Uso (dentro del código)
-JDBC_URL	URL de conexión de la base de datos (PostgreSQL).	spring.datasource.url: ${JDBC_URL}
-JDBC_USER	Nombre de usuario de la base de datos.	spring.datasource.username: ${JDBC_USER}
-JDBC_PASSWORD	Contraseña de la base de datos.	spring.datasource.password: ${JDBC_PASSWORD}
-SSL_FILE	Ruta al archivo keystore SSL (e.g., .p12).	server.ssl.key-store: ${SSL_FILE}
-SSL_PASS	Contraseña del keystore SSL.	server.ssl.key-store-password: ${SSL_PASS}
-JWT_SECRET	Clave secreta para la firma y verificación de JWTs.	jwt.secret: ${JWT_SECRET}
-GATEWAY_ROUTES	Ruta al archivo de configuración de rutas dinámicas (e.g., routes.yml).	spring.config.import: optional:file:${GATEWAY_ROUTES}
+**IMPORTANTE:** Para garantizar la seguridad y la flexibilidad, **todos los datos sensibles y las URLs se cargan dinámicamente** a través de **variables de entorno**. Asegúrate de definir las siguientes variables antes de ejecutar la aplicación:
 
-🛠️ Configuración application.yml
+| Variable | Descripción | Ejemplo de Uso (dentro del código) |
+| :--- | :--- | :--- |
+| `JDBC_URL` | URL de conexión de la base de datos (PostgreSQL). | `spring.datasource.url: ${JDBC_URL}` |
+| `JDBC_USER` | Nombre de usuario de la base de datos. | `spring.datasource.username: ${JDBC_USER}` |
+| `JDBC_PASSWORD` | Contraseña de la base de datos. | `spring.datasource.password: ${JDBC_PASSWORD}` |
+| `SSL_FILE` | Ruta al archivo *keystore* SSL (e.g., `.p12`). | `server.ssl.key-store: ${SSL_FILE}` |
+| `SSL_PASS` | Contraseña del *keystore* SSL. | `server.ssl.key-store-password: ${SSL_PASS}` |
+| `JWT_SECRET` | Clave secreta para la firma y verificación de JWTs. | `jwt.secret: ${JWT_SECRET}` |
+| `GATEWAY_ROUTES` | Ruta al archivo de configuración de rutas dinámicas (e.g., `routes.yml`). | `spring.config.import: optional:file:${GATEWAY_ROUTES}` |
 
-A continuación, se muestra un fragmento de la configuración principal, donde se visualiza el uso de las variables de entorno:
-YAML
+### 🛠️ Configuración `application.yml`
 
+El uso de las variables de entorno se refleja en la configuración de Spring Boot/Cloud:
+
+```yaml
 spring:
   application:
     name: Api-gw
@@ -63,8 +69,7 @@ spring:
     url: ${JDBC_URL}
     username: ${JDBC_USER}
     password: ${JDBC_PASSWORD}
-    driver-class-name: org.postgresql.Driver
-    # ... (Otras configuraciones de Hikari y JPA) ...
+    # ... (Configuraciones de la DB) ...
   config:
     # Carga la configuración de rutas de forma dinámica
     import: optional:file:${GATEWAY_ROUTES}
@@ -78,15 +83,3 @@ server:
 jwt:
   secret: ${JWT_SECRET}
 # ... (Otras configuraciones) ...
-
-📚 Documentación
-
-La documentación de la API (Swagger UI) está disponible en la siguiente ruta:
-
-    Ruta de Documentación: /docs
-
-👩‍💻 Autor
-
-    AlexTcw (GitHub: AlexTcw)
-
-Espero que este README cumpla con tus expectativas. ¿Hay alguna sección o detalle adicional que te gustaría incluir o modificar?
